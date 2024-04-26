@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <link href="http://cdn-na.infragistics.com/igniteui/2023.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="http://cdn-na.infragistics.com/igniteui/2023.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <script src="http://cdn-na.infragistics.com/igniteui/2023.2/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2023.2/latest/js/infragistics.lob.js"></script>
+
+
+<style>
+	.rowHeaderStyle {
+	    color: #fff !important;
+        background-color: #888 !important;
+		border-bottom: 1px solid #777 !important;
+		border-left: 1px solid #777 !important;
+    }
+	
+	#grid1_headerCol{
+		background-image: linear-gradient(to right top, transparent calc(50% - 0.5px), #777 50%, #777 calc(50% + 0.5px), transparent calc(50% + 1px));
+	}
+</style>
+<script>
+$(function() {
+
+    var data = [];
+	for(var i = 0; i < 10; i++)
+	{
+		data.push({"id":i, "headerCol": "Row " + (i + 1), "col1":i, "col2":new Date().setTime(new Date().getTime() + i * 86400000 ), "col3":"test" + i });
+	}
+			
+	$("#grid1").igGrid(
+		{
+			autoGenerateColumns:false,
+			autoCommit:true,
+			primaryKey:"id",
+			columns:[
+				{key:"id", headerText:"id", dataType:"number", width:"100px", hidden:true},
+				{key:"headerCol", headerText:"", dataType:"string", width:"100px", columnCssClass: "rowHeaderStyle"},
+				{key:"col1", headerText:"Column 1", dataType:"number", width:"100px"},
+				{key:"col2", headerText:"Column 2", dataType:"date", width:"200px"},
+				{key:"col3", headerText:"Column 3", dataType:"string", width:"200px"}
+			],
+			dataSource: data,
+			features:[
+				{
+					name:"Updating",
+					enableAddRow:false,
+					enableDeleteRow:false,
+					editMode:"cell",
+					showDoneCancelButtons:false,
+					columnSettings: [
+						{
+						    //headerCol列は編集不可とする
+							columnKey : "headerCol",
+							readOnly: true
+						}
+					]
+				}
+			]
+		}
+    );
+});
+
+</script>
+</head>
+<body>
+
+<table id="grid1"></table>
+
+</body>
+</html>
